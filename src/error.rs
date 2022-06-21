@@ -21,6 +21,8 @@ pub enum Error {
     TooManyHelpers,
     #[error("thread died: {0}")]
     DeadThread(#[from] std::sync::mpsc::SendError<crate::net::Message>),
+    #[error("thread failed: {0}")]
+    TaskFailed(#[from] tokio::task::JoinError),
 
     #[error("failed to decode hex: {0}")]
     #[cfg(feature = "cli")]
@@ -30,6 +32,10 @@ pub enum Error {
     #[error("failed to parse json: {0}")]
     #[cfg(feature = "enable-serde")]
     Serde(#[from] serde_json::Error),
+
+    // module errors
+    #[error("pipeline error: {0}")]
+    Pipeline(#[from] crate::pipeline::error::Error),
 }
 
-pub type Res<T> = Result<T, Error>;
+pub type Result<T> = core::result::Result<T, Error>;
