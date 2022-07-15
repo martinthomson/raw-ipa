@@ -6,6 +6,7 @@ pub mod error;
 pub mod field;
 pub mod helpers;
 pub mod net;
+#[cfg(test)]
 pub mod pipeline;
 pub mod prss;
 pub mod report;
