@@ -37,7 +37,6 @@ pub trait Field:
 
 // TODO(mt) - this code defining fields can be turned into a macro if we ever
 // need lots of fields with different primes.
-
 #[derive(Clone, Copy, PartialEq)]
 pub struct Fp31(<Self as Field>::Integer);
 
@@ -146,6 +145,13 @@ impl Debug for Fp31 {
     }
 }
 
+impl Fp31 {
+    #[must_use]
+    pub fn val(&self) -> u128 {
+        u128::from(self.0)
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::field::Field;
@@ -175,7 +181,8 @@ mod test {
             "from takes a modulus"
         );
         assert_eq!(Fp31(0), Fp31(0) + Fp31(0));
-        assert_eq!(Fp31(0), Fp31(0) + Fp31(0));
+        assert_eq!(Fp31(0), Fp31(0) - Fp31(0));
+        assert_eq!(Fp31(1), Fp31(1) - Fp31(0));
         assert_eq!(Fp31(<Fp31 as Field>::PRIME - 1), Fp31(0) - Fp31(1));
         assert_eq!(Fp31(0), Fp31(0) * Fp31(1));
     }
