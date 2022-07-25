@@ -132,7 +132,7 @@ impl Action {
 
 fn main() {
     let args = Args::from_args();
-    args.common.logging.setup_logging();
+    let _handle = args.common.logging.setup_logging();
     trace!("args: {:?}", args);
     args.action.dispatch(&args.common);
 }
